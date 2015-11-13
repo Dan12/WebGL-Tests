@@ -45,9 +45,17 @@ var animation1 = {
      0.0,1.0,0.0,1.0,
      0.0,0.0,1.0,1.0,
      1.0,1.0,0.0,1.0]);
+     
+   A1SphereBuffer = createSphere(1, 0.125,
+    [1.0,0.0,0.0,1.0]);
 }, 
 
 "drawFunc": function(){
+      
+  //look at matrix
+  mvMatrix = makeLookAt(0,0,1,0,0,0,0,1,0);
+    
+  //light direction
   lightingDirection = (Matrix.Rotation(A1cubeRotation*(Math.PI/180),Vector.create([1,0,1])).x(Vector.create(constLightingDirection))).elements;
 
   // Now move the drawing position a bit to where we want to start
@@ -78,9 +86,16 @@ var animation1 = {
   
   //draw another cube
   mvPopMatrix();
+  
+  mvPushMatrix();
   mvRotate(45, [1,1,1]);
   mvScale(2,1,1);
   drawArrayBuffer(A1cubeBuffer[0], A1cubeBuffer[1], A1cubeBuffer[2], gl.TRIANGLES);
+  mvPopMatrix();
+  
+  mvTranslate([2,-2,0]);
+  //mvRotate(A1cubeRotation, [1,0,0]);
+  drawArrayBuffer(A1SphereBuffer[0], A1SphereBuffer[1], A1SphereBuffer[2], gl.TRIANGLES);
 }, 
 
 "animateFunc": function(){
@@ -110,6 +125,7 @@ var A1triangleBuffer;
 var A1squareBuffer;
 var A1cubeBuffer;
 var A1PyrBuffer;
+var A1SphereBuffer;
 
 var A1cubeRotation = 0.0;
 var A1cubeXOffset = 0.0;

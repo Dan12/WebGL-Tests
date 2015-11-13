@@ -43,7 +43,7 @@ function createPyramid(r, colors){
   var tempVerticies = [];
   var V1 = Vector.create([-r,-r,r]);
   var V2 = V1.add(Vector.create([2*r,0,0]));
-  var V3 = V1.add(Vector.create([r,2*r,-r]));
+  var V3 = V1.add(Vector.create([r,r,-r]));
   var M1 = Matrix.create([V1.elements,V2.elements,V3.elements]);
   var M1 = M1.transpose();
   //front
