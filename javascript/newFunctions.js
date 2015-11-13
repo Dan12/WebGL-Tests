@@ -1,13 +1,7 @@
 function createCube(r, colors){
   var tempVerticies = [];
-  var V1 = Vector.create([-r,-r,r]);
-  var V2 = V1.add(Vector.create([2*r,0,0]));
-  var V3 = V1.add(Vector.create([0,2*r,0]));
-  var V4 = V1.add(Vector.create([2*r,2*r,0]));
-  var M1 = Matrix.create([V1.elements,V2.elements,V4.elements]);
-  var M2 = (Matrix.Rotation(Math.PI, Vector.create([0,0,1])).round()).x(M1);
-  //matrix of square, 6 verticies
-  var fMat = M1.augment(M2);
+  
+  fMat = getSquareVerts(r);
   
   //front
   tempVerticies = tempVerticies.concat(fMat.flatten());
@@ -35,8 +29,47 @@ function createCube(r, colors){
   return initArrayBuffer(tempVerticies, tempVerticies.length/3, tempColors);
 }
 
+function getSquareVerts(r){
+  var V1 = Vector.create([-r,-r,r]);
+  var V2 = V1.add(Vector.create([2*r,0,0]));
+  var V3 = V1.add(Vector.create([0,2*r,0]));
+  var V4 = V1.add(Vector.create([2*r,2*r,0]));
+  var M1 = Matrix.create([V1.elements,V2.elements,V4.elements]);
+  var M2 = (Matrix.Rotation(Math.PI, Vector.create([0,0,1])).round()).x(M1);
+  //matrix of square, 6 verticies
+  return M1.augment(M2);
+}
+
 function createPyramid(r, colors){
+  var tempVerticies = [];
+  var V1 = Vector.create([-r,-r,r]);
+  var V2 = V1.add(Vector.create([2*r,0,0]));
+  var V3 = V1.add(Vector.create([r,2*r,-r]));
+  var M1 = Matrix.create([V1.elements,V2.elements,V3.elements]);
+  var M1 = M1.transpose();
+  //front
+  tempVerticies = tempVerticies.concat(M1.flatten());
+  //right
+  tempVerticies = tempVerticies.concat((Matrix.Rotation(Math.PI/2, Vector.create([0,1,0]))).x(M1).flatten());
+  //back
+  tempVerticies = tempVerticies.concat((Matrix.Rotation(Math.PI, Vector.create([0,1,0]))).x(M1).flatten());
+  //left
+  tempVerticies = tempVerticies.concat((Matrix.Rotation(Math.PI*3/2, Vector.create([0,1,0]))).x(M1).flatten());
+  //bottom
+  fMat = getSquareVerts(r);
+  tempVerticies = tempVerticies.concat((Matrix.Rotation(Math.PI/2, Vector.create([1,0,0]))).x(fMat).flatten());
   
+  var tempColors = [];
+  
+  if(colors.length == 20){
+    for(var i = 0; i < 5; i++){
+      tempColors = tempColors.concat(reshapColors(colors.slice(i*4,(i+1)*4),3));
+    }
+  }
+  else
+    tempColors = colors;
+    
+  return initArrayBuffer(tempVerticies, tempVerticies.length/3, tempColors);
 }
 
 function initArrayBuffer(verticies, numVert, colors){
@@ -81,7 +114,7 @@ function drawArrayBuffer(verticies, colors, norms, glType){
 function reshapColors(colors, numVert){
   var retColors = colors;
   for(var i = 0; i < numVert-colors.length/4; i++){
-    retColors = retColors.concat(colors);
+    retColors = retColors.concat(colors.slice(colors.length-12,colors.length));
   }
   return retColors;
 }
