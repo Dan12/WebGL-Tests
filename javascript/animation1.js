@@ -78,7 +78,7 @@ var animation1 = {
   
   //draw another cube
   mvPopMatrix();
-  mvRotate(A1cubeRotation*0.2, [1,0,1]);
+  mvRotate(45, [1,1,1]);
   mvScale(2,1,1);
   drawArrayBuffer(A1cubeBuffer[0], A1cubeBuffer[1], A1cubeBuffer[2], gl.TRIANGLES);
 }, 

@@ -13,4 +13,4 @@ var constLightingDirection = [1,1,1];
 var lightingDirection = constLightingDirection;
 var directVals = [0.9,0.9,0.9];
 
-var currentAnimation = animation2;
+var currentAnimation = animation1;

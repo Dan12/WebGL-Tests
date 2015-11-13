@@ -32,9 +32,8 @@ function createCube(r, colors){
 function getSquareVerts(r){
   var V1 = Vector.create([-r,-r,r]);
   var V2 = V1.add(Vector.create([2*r,0,0]));
-  var V3 = V1.add(Vector.create([0,2*r,0]));
   var V4 = V1.add(Vector.create([2*r,2*r,0]));
-  var M1 = Matrix.create([V1.elements,V2.elements,V4.elements]);
+  var M1 = Matrix.create([V1.elements,V2.elements,V4.elements]).transpose();
   var M2 = (Matrix.Rotation(Math.PI, Vector.create([0,0,1])).round()).x(M1);
   //matrix of square, 6 verticies
   return M1.augment(M2);
