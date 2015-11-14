@@ -1,6 +1,7 @@
 // Initialize the buffers we'll need.
 function initBuffers() {
-  currentAnimation.setupFunc();
+  animations[curAnim].setGlobals();
+  animations[curAnim].setupFunc();
 }
 
 // Draw the scene.
@@ -8,7 +9,7 @@ function drawScene() {
 
   initScene();
   
-  currentAnimation.drawFunc();
+  animations[curAnim].drawFunc();
 
   //animate
   animate();
@@ -16,7 +17,7 @@ function drawScene() {
 
 // Animate
 function animate(){
-  currentAnimation.animateFunc();
+  animations[curAnim].animateFunc();
 }
 
 function initScene(){

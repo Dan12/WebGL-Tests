@@ -16,6 +16,7 @@
     <script type="text/javascript" src="javascript/animation1.js"></script>
     <script type="text/javascript" src="javascript/animation2.js"></script>
     <script type="text/javascript" src="javascript/variables.js"></script>
+    <script type="text/javascript" src="javascript/ui.js"></script>
     
     <!-- Fragment shader program -->
     <script id="shader-fs" type="x-shader/x-fragment">
@@ -58,11 +59,15 @@
   </head>
   
   <body onload="start()">
+    <h1>WebGL Tests</h1>
     
     <canvas id="glcanvas" width="640" height="480" style="border: 1px solid lightgray;">
       Your browser doesn't appear to support the 
       <code>canvas</code> element.
     </canvas>
+    <br>
+    <div class="button" id="anim1" anim="0">Animation1</div>
+    <div class="button" id="anim2" anim="1">Animation2</div>
     
   </body>
 </html>

@@ -1,4 +1,22 @@
 var animation1 = {
+  
+"setGlobals": function(){
+  //globalVariables
+  A1triangleBuffer = null;
+  A1squareBuffer = null;
+  A1cubeBuffer = null;
+  A1PyrBuffer = null;
+  A1SphereBuffer = null;
+  
+  A1cubeRotation = 0.0;
+  A1cubeXOffset = 0.0;
+  A1cubeYOffset = 0.0;
+  A1cubeZOffset = 0.0;
+  A1lastCubeUpdateTime = 0;
+  A1xIncValue = 0.4;
+  A1yIncValue = -0.1;
+  A1zIncValue = 0.3;
+},
 
 "setupFunc": function(){
   
@@ -46,7 +64,7 @@ var animation1 = {
      0.0,0.0,1.0,1.0,
      1.0,1.0,0.0,1.0]);
      
-   A1SphereBuffer = createSphere(1, 0.125,
+   A1SphereBuffer = createSphere(1, 0.25,
     [1.0,0.0,0.0,1.0]);
 }, 
 
@@ -56,7 +74,7 @@ var animation1 = {
   mvMatrix = makeLookAt(0,0,1,0,0,0,0,1,0);
     
   //light direction
-  lightingDirection = (Matrix.Rotation(A1cubeRotation*(Math.PI/180),Vector.create([1,0,1])).x(Vector.create(constLightingDirection))).elements;
+  lightingDirection = (Matrix.Rotation(A1cubeRotation*(Math.PI/180),Vector.create([0,1,0])).x(Vector.create(constLightingDirection))).elements;
 
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
@@ -64,7 +82,7 @@ var animation1 = {
 
   // Save the current matrix, then rotate before we draw.
   mvPushMatrix();
-  mvRotate(A1cubeRotation, [1, 0, 1]);
+  //mvRotate(A1cubeRotation, [1, 0, 1]);
   
   mvPushMatrix();
   mvTranslate([2,2,0]);
@@ -119,19 +137,3 @@ var animation1 = {
 
   A1lastCubeUpdateTime = currentTime;
 }};
-
-//globalVariables
-var A1triangleBuffer;
-var A1squareBuffer;
-var A1cubeBuffer;
-var A1PyrBuffer;
-var A1SphereBuffer;
-
-var A1cubeRotation = 0.0;
-var A1cubeXOffset = 0.0;
-var A1cubeYOffset = 0.0;
-var A1cubeZOffset = 0.0;
-var A1lastCubeUpdateTime = 0;
-var A1xIncValue = 0.4;
-var A1yIncValue = -0.1;
-var A1zIncValue = 0.3;

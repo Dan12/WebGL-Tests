@@ -1,4 +1,24 @@
 var animation2 = {
+  
+  "setGlobals": function(){
+    //globla variables
+    A2cubeBuffer = null;
+    A2pyrBuffer = null;
+    A2groundBuffer = null;
+    A2sphereBuffer = null;
+    
+    A2lastUpdateTime = 0;
+    
+    A2rotatey = 0;
+    A2rotateyInc = 8;
+    A2yposStart = -19;
+    A2yposEnd = 25;
+    A2ypos = A2yposStart;
+    A2yposInc = 0.02;
+    A2dim = 0;
+    A2dimInc = 0.2;
+  },
+  
   "setupFunc": function(){
     A2cubeBuffer = createCube(1,
     [1.0,0.0,1.0,1.0,
@@ -16,9 +36,14 @@ var animation2 = {
      0.0,1.0,1.0,1.0]);
      
      A2groundBuffer = createCube(1,[0.1,0.8,0.1,1.0]);
+     
+     A2sphereBuffer = createSphere(10,4,[1.0,0.1,0.1,1.0]);
   },
   
   "drawFunc": function(){
+    //light direction
+    lightingDirection = (Matrix.Rotation(A2rotatey*(Math.PI/180),Vector.create([0,1,0])).x(Vector.create(constLightingDirection))).elements;
+    
     //look at matrix
     mvMatrix = makeLookAt(0,0,10,0,0,0,0,1,0);
     
@@ -35,10 +60,14 @@ var animation2 = {
     mvTranslate([0,2,0]);
     drawArrayBuffer(A2pyrBuffer[0], A2pyrBuffer[1], A2pyrBuffer[2], gl.TRIANGLES);
     mvPopMatrix();
+
+    mvPushMatrix();
     mvTranslate([0.0,-21,0.0]);
-    mvScale(10,1,10);
+    mvScale(20,1,14);
     drawArrayBuffer(A2groundBuffer[0], A2groundBuffer[1], A2groundBuffer[2], gl.TRIANGLES);
+    mvPopMatrix();
     
+    drawArrayBuffer(A2sphereBuffer[0], A2sphereBuffer[1], A2sphereBuffer[2], gl.TRIANGLES);
   },
   
   "animateFunc": function(){
@@ -48,7 +77,7 @@ var animation2 = {
   
       var scaleUpdate = (30 * delta) / 1000.0;
       A2ypos+=A2yposInc*scaleUpdate;
-      A2yposInc*=1.02;
+      A2yposInc*=1.015;
       if(A2ypos >= A2yposEnd){
         A2ypos = A2yposStart;
         A2dim = 0;
@@ -61,19 +90,3 @@ var animation2 = {
     A2lastUpdateTime = currentTime;
   }
 };
-
-//globla variables
-var A2cubeBuffer;
-var A2pyrBuffer;
-var A2groundBuffer;
-
-var A2lastUpdateTime;
-
-var A2rotatey = 0;
-var A2rotateyInc = 8;
-var A2yposStart = -19;
-var A2yposEnd = 25;
-var A2ypos = A2yposStart;
-var A2yposInc = 0.02;
-var A2dim = 0;
-var A2dimInc = 0.2;
